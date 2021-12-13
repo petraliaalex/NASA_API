@@ -169,7 +169,7 @@ def nearest_misses():
     
     #stores the sorted asteroid_ids in sorted_id_list
     for items in sorted_miles_dict:
-        print(pprint.pformat(items))
+        #print(pprint.pformat(items))
         sorted_id_list.append(items)
         
     #prints the asteroid record using asteroid_id in sorted order for a TOP 10

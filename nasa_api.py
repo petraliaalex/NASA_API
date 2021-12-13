@@ -6,8 +6,8 @@ Project: NASA API
 
 
 import requests
-#import pytest
-#import poetry
+import pytest
+import poetry
 import pprint
 from datetime import datetime
 import calendar
@@ -20,17 +20,17 @@ NOTES:
 api_key=DEMO_KEY
 
 
-#whats our endpoint (or a url)
+#What is our endpoint (or a url)
 https://api.nasa.gov/neo/rest/v1/neo/browse
 
 
-#what is the HTTP method that we need?
+#What is the HTTP method that we need?
 ENDPOINT
 GET
 /neo/{id}
 
 
-endpoint with GET method
+Endpoint with GET method
 => https://api.nasa.gov/neo/rest/v1/neo/browse/neo/{id}?api_key=DEMO_KEY
 ============================================================================
 """
@@ -57,7 +57,8 @@ endpoint = f"{api_base_url}{endpoint_path}{api_key}"
 #==========================================================================
 
 
-#============================Functions=====================================
+
+#============================Function 1=====================================
 """
 This function should return JSON data that includes each asteroid and its closest 
 approach to Earth
@@ -73,11 +74,11 @@ def asteroid_closest_approach():
     endpoint = f"{api_base_url}{endpoint_path}{api_key}"
     r = requests.get(endpoint)
     print(pprint.pformat(r.json()))
-    
-    
+#==========================================================================
     
 
-
+    
+#============================Function 2=====================================
 """
 This function should return JSON data that includes all the closest asteroid approaches 
 in a given calendar month, including a total element_count for the month. 
@@ -117,16 +118,18 @@ def month_closest_approaches():
             print(pprint.pformat(r.json()))
             #with open('asteroid_data_2.txt', 'w') as output:
             #    output.write(pprint.pformat(r.json()))
-            
+#==========================================================================      
 
 
+
+#===========================Function 3=====================================
 """
 This function should return JSON data that includes the 10 nearest misses, 
 historical or expected, of asteroids impacting Earth.
 
 
-Tree Structure for nearest_miss data:
-    Level 0: blank
+Tree Structure for nearest_miss_data:
+    Level 0: "near_earth_objects"
     Level 1: "close_approach_data"
     Level 2: "miss_distance"
     Level 3: "miles"
@@ -134,9 +137,6 @@ Tree Structure for nearest_miss data:
 Find Top 10 Results using min("miles")
 """
 def nearest_misses():
-    #Setup HTTP Request
-    
-    
     
     #Setup HTTP Request
     api_base_url = "https://api.nasa.gov/neo/rest/v1"
@@ -151,32 +151,38 @@ def nearest_misses():
     json_data = r.json()
     asteroid_list = json_data['near_earth_objects']
     
+    #Setup Lists and Dictionaries
+    miles_dict = {}
+    asteroid_dict = {}
+    sorted_id_list = []
+    
+    #Save the asteroid_id, miles and related data into the dictionaries
     for asteroid in asteroid_list:
-        print(pprint.pformat(asteroid['close_approach_data']))
+        #asteroid = contains all needed data for each asteroid
+        asteroid_id = str(asteroid['id'])
+        asteroid_miles = str(asteroid['close_approach_data'][3]['miss_distance']['miles'])
+        miles_dict.update({asteroid_id: asteroid_miles})
+        asteroid_dict.update({asteroid_id: asteroid})
+        
+    #sorts the asteroid_id with its given miss_distance in miles (descending)
+    sorted_miles_dict = {k: v for k, v in sorted(miles_dict.items(), key=lambda item: item[1])}
     
+    #stores the sorted asteroid_ids in sorted_id_list
+    for items in sorted_miles_dict:
+        print(pprint.pformat(items))
+        sorted_id_list.append(items)
+        
+    #prints the asteroid record using asteroid_id in sorted order for a TOP 10
+    for i in range(0,9):
+        cur_id = sorted_id_list[i]
+        print(pprint.pformat(asteroid_dict[cur_id]))
     
-    """
-    Failed Attempts and Notes for nearest_misses() function
-    ===================================================================
+    #Testing
+    #print(pprint.pformat(json_data))
+    #print(type(json_data))
+    #print(type(asteroid_list))
+#==========================================================================
     
-    #GOAL: SORT by 'miles' = asteroid_list['miss_distance']['miles']
-    
-    
-    #Attempt 1: trying to sort by 'miles', couldn't find way to iterate over the 'miss_distance' dictionary
-    ================================================
-    final = asteroid_list.sort(key =lambda k: k['close_approach_data']['miss_distance']['miles'], reverse=True)
-    #print(final)
-    
-    #Attempt 2: Iterate over each asteroid, get the attributes and values, append to new json object by sorting
-    ================================================
-    for asteroid in asteroid_list:
-        for attribute,value in asteroid.items():
-            print(attribute,value)
-    sorted_json = sorted(asteroid_list, key=lambda d: d['close_approach_data'])
-    #print(sorted_json)
-    
-    
-    """
     
     
 #============================Execution=====================================

@@ -3,9 +3,7 @@ Python Script that produces Asteroid Data from NASA
 
 Functions:
 ===================================
-asteroid_closest_approach()
-month_closest_approaches()
-nearest_misses()
+asteroid_closest_approach(), month_closest_approaches(), nearest_misses()
 
 Notes:
 ==================================

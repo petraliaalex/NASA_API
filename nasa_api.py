@@ -6,60 +6,11 @@ Project: NASA API
 
 
 import requests
-import pytest
-import poetry
-from bs4 import BeautifulSoup
+#import pytest
+#import poetry
 import pprint
-import json
 from datetime import datetime
 import calendar
-
-
-
-
-
-  
-"""
-# the file to be converted to 
-# json format
-filename = 'asteroid_data_2.txt'
-  
-# dictionary where the lines from
-# text will be stored
-dict1 = {}
-  
-# creating dictionary
-with open(filename) as fh:
-  
-    for line in fh:
-  
-        # reads each line and trims of extra the spaces 
-        # and gives only the valid words
-        command, description = line.strip().split(None, 1)
-  
-        dict1[command] = description.strip()
-  
-# creating json file
-# the JSON file is named as test1
-out_file = open("test1.json", "w")
-json.dump(dict1, out_file, indent = 4, sort_keys = False)
-out_file.close()
-
-
-
-print(dict1)
-"""
-
-
-
-
-
-
-
-
-
-
-
 
 
 """
@@ -97,10 +48,6 @@ endpoint = f"{api_base_url}{endpoint_path}{api_key}"
 
 
 
-
-
-
-
 #============================Print Methods for Testing=====================
 #print(endpoint)
 #print(r.status_code)
@@ -111,6 +58,10 @@ endpoint = f"{api_base_url}{endpoint_path}{api_key}"
 
 
 #============================Functions=====================================
+"""
+This function should return JSON data that includes each asteroid and its closest 
+approach to Earth
+"""
 def asteroid_closest_approach():
     #Setup HTTP Request
     api_base_url = "https://api.nasa.gov/neo/rest/v1"
@@ -127,9 +78,14 @@ def asteroid_closest_approach():
     
 
 
+"""
+This function should return JSON data that includes all the closest asteroid approaches 
+in a given calendar month, including a total element_count for the month. 
+Please keep in mind that the endpoint is only able to return 7 days of data at a time.
 
 #Function prints all closest asteroid approaches in the given/current month
 #example query = 'https://api.nasa.gov/neo/rest/v1/feed?start_date=2021-12-01&end_date=2021-12-31&api_key=DEMO_KEY'
+"""
 def month_closest_approaches():
     #Setup HTTP Request
     api_base_url = 'https://api.nasa.gov/neo/rest/v1/'
@@ -163,18 +119,24 @@ def month_closest_approaches():
             #    output.write(pprint.pformat(r.json()))
             
 
+
+"""
+This function should return JSON data that includes the 10 nearest misses, 
+historical or expected, of asteroids impacting Earth.
+
+
+Tree Structure for nearest_miss data:
+    Level 0: blank
+    Level 1: "close_approach_data"
+    Level 2: "miss_distance"
+    Level 3: "miles"
+=>
+Find Top 10 Results using min("miles")
+"""
 def nearest_misses():
     #Setup HTTP Request
     
-    """
-    Tree Structure for nearest_miss data:
-        Level 0: blank
-        Level 1: "close_approach_data"
-        Level 2: "miss_distance"
-        Level 3: "miles"
-    =>
-    Find Top 10 Results using min("miles")
-    """
+    
     
     #Setup HTTP Request
     api_base_url = "https://api.nasa.gov/neo/rest/v1"

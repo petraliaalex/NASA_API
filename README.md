@@ -1,14 +1,9 @@
 # NASA_API
 Python Script that produces Asteroid Data from NASA
 
-Functions:
+Functions (Call from Command Line to Run):
 ===================================
 asteroid_closest_approach(), month_closest_approaches(), nearest_misses()
-
-Notes:
-==================================
-Requirements for nearest_misses() was not completed but included 
-notes on my thought processes for the solution
 
 Link to PyPi Project Build
 ==================================

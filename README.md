@@ -1,5 +1,5 @@
 # NASA_API
-Python Script that retrieves current Asteroid Data from NASA and finds out which asteroids were the closest to Earth (based on the current date).
+Retrieves current Asteroid Data from NASA and finds out which asteroids were closest to Earth.
 
 Functions (Call from Command Line to Run):
 ===================================
